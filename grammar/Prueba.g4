@@ -1,4 +1,4 @@
-grammar MyLanguage;
+grammar Prueba;
 
 commands   : command commands
         | EOF
