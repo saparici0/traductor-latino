@@ -1,0 +1,201 @@
+GRAM -> SEC
+SEC -> ASIG_INC_FUNC_LLAM + SEC
+SEC -> SI + SEC
+SEC -> FUNC + SEC
+SEC -> RETORNAR_PC + EXP + SEC
+SEC -> ELEGIR + SEC
+SEC -> romper + SEC
+SEC -> DESDE + SEC
+SEC -> MIENTRAS + SEC
+SEC -> PARA + SEC
+SEC -> REPETIR + SEC
+SEC -> FUNC_RESERV2 + tkn_opening_par + ARG_EXP  + SEC
+SEC -> eps
+
+## ASIGNACION - INCREMENTO - LLAMADO DE FUNCIONES
+
+## LLAMADO DE FUNCIONES
+
+ASIG_INC_FUNC_LLAM -> id + ASIG_INC_FUNC_LLAM1
+
+ASIG_INC_FUNC_LLAM1 -> OP_ASIG + EXP
+ASIG_INC_FUNC_LLAM1 -> tkn_opening_bra + EXP + tkn_closing_bra + ASIG_INC_FUNC_LLAM1
+ASIG_INC_FUNC_LLAM1 -> tkn_period + id + ASIG_INC_FUNC_LLAM5 + ASIG_INC_FUNC_LLAM1
+ASIG_INC_FUNC_LLAM1 -> tkn_comma + id + ASIG_INC_FUNC_LLAM2
+ASIG_INC_FUNC_LLAM1 -> tkn_increment | tkn_decrement
+ASIG_INC_FUNC_LLAM1 -> tkn_opening_par + ARG_EXP
+
+ASIG_INC_FUNC_LLAM2 -> tkn_comma + id + ASIG_INC_FUNC_LLAM2
+ASIG_INC_FUNC_LLAM2 -> OP_ASIG + EXP + ASIG_INC_FUNC_LLAM3
+
+ASIG_INC_FUNC_LLAM3 -> eps
+ASIG_INC_FUNC_LLAM3 -> tkn_comma + EXP + ASIG_INC_FUNC_LLAM4
+
+ASIG_INC_FUNC_LLAM4 -> tkn_comma + EXP + ASIG_INC_FUNC_LLAM4
+ASIG_INC_FUNC_LLAM4 -> eps
+
+ASIG_INC_FUNC_LLAM5 -> tkn_period + id + ASIG_INC_FUNC_LLAM5
+ASIG_INC_FUNC_LLAM5 -> tkn_opening_bra + EXP + tkn_closing_bra + ASIG_INC_FUNC_LLAM5
+ASIG_INC_FUNC_LLAM5 -> eps
+
+ASIG -> id + OP_ASIG + EXP
+
+OP_ASIG -> tkn_assign | tkn_plus_assign | tkn_minus_assign | tkn_minus_assign | tkn_times_assign | tkn_div_assign | tkn_mod_assign
+
+## ARITMETICA - RELACIONALES - LOGICOS - CADENAS - LISTAS
+
+# EXPV no puede ser una LIST o DIC. EXP si.
+
+EXPV -> tkn_opening_par + EXPV1
+EXPV -> VAL + EXP1
+EXPV -> VALX + OP + EXP
+
+EXPV1 -> VAL + EXP1 + tkn_closing_par + EXP1
+EXPV1 -> VALX + EXPV2
+EXPV1 -> tkn_opening_par + EXPV + tkn_closing_par + EXP1
+
+EXPV2 -> OP + EXP + tkn_closing_par + EXP1
+EXPV2 -> tkn_closing_par + OP + EXP
+
+EXP -> tkn_not + EXP
+EXP -> tkn_plus + EXP
+EXP -> tkn_minus + EXP
+EXP -> tkn_opening_par + EXP + tkn_closing_par + EXP1
+EXP -> VALC + EXP1
+EXP -> FUNC_ALT
+
+EXP1 -> OP + EXP
+EXP1 -> eps
+
+VALC -> VAL
+VALC -> VALX
+
+VAL -> id + VAL1
+VAL -> FUNC_RESERV1 + tkn_opening_par + ARG_EXP 
+VAL -> tkn_real | cierto | verdadero | falso | cad_tkn | nulo
+
+VAL1 -> tkn_period + id + VAL1
+VAL1 -> tkn_opening_par + ARG_EXP
+VAL1 -> tkn_opening_bra + EXP + tkn_closing_bra
+VAL1 -> eps
+
+VALX -> LIST
+VALX -> DIC
+
+# ARITMETICA
+OP -> tkn_plus | tkn_minus | tkn_times | tkn_div | tkn_mod | tkn_power
+# RELACIONALES
+OP -> tkn_equal | tkn_neq | tkn_greater | tkn_less | tkn_geq | tkn_leq | tkn_regex
+# LOGICOS
+OP -> tkn_and | tkn_or
+# CADENA
+OP -> tkn_concat
+
+## FUNCIONES
+
+FUNC -> FUNC_PC + id + tkn_opening_par + ARG_EXP + SEC_NO_VAC + fin
+
+FUNC_ALT -> FUNC_PC + tkn_opening_par + ARG_EXP + SEC_NO_VAC + fin
+
+FUNC_PC -> fun | funcion
+
+ARG_EXP -> EXP + ARG_EXP1 + tkn_closing_par
+ARG_EXP -> tkn_closing_par
+
+ARG_EXP1 -> tkn_comma + EXP + ARG_EXP1
+ARG_EXP1 -> eps
+
+SEC_NO_VAC -> ASIG_INC_FUNC_LLAM + SEC
+SEC_NO_VAC -> SI + SEC
+SEC_NO_VAC -> FUNC + SEC
+SEC_NO_VAC -> RETORNAR_PC + EXP + SEC
+SEC_NO_VAC -> ELEGIR + SEC
+SEC_NO_VAC -> romper + SEC
+SEC_NO_VAC -> DESDE + SEC
+SEC_NO_VAC -> MIENTRAS + SEC
+SEC_NO_VAC -> PARA + SEC
+SEC_NO_VAC -> REPETIR + SEC
+SEC_NO_VAC -> FUNC_RESERV2 + tkn_opening_par + ARG_EXP + SEC
+
+RETORNAR_PC -> retornar | retorno | ret
+
+## LISTAS
+
+LIST -> tkn_opening_bra + LIST1
+
+LIST1 -> EXP + LIST2 + tkn_closing_bra
+LIST1 -> tkn_closing_bra
+
+LIST2 -> tkn_comma + EXP + LIST2
+LIST2 -> eps
+
+## DICCIONARIOS
+
+DIC -> tkn_opening_key + DIC1
+
+DIC1 -> EXPV + tkn_colon + DIC2 + tkn_closing_key
+DIC1 -> tkn_closing_key
+
+DIC2 -> EXP + DIC3
+
+DIC3 -> tkn_comma + EXPV + tkn_colon + EXP + DIC3
+DIC3 -> eps
+
+## CONDICIONALES
+
+# SI
+
+SI -> si + EXP + SEC + OSI + SINO + fin
+
+# OSI
+
+OSI -> osi + EXP + SEC + OSI
+OSI -> eps
+
+# SINO
+
+SINO -> sino + SEC
+SINO -> eps
+
+# ELEGIR (SWITCH)
+
+ELEGIR -> elegir + EXP + caso + EXP + tkn_colon + SEC + CASO + OTRO + fin
+
+CASO -> caso + EXP + tkn_colon + SEC + CASO
+CASO -> eps
+
+OTRO -> OTRO_PC + tkn_colon + SEC
+OTRO -> eps
+
+OTRO_PC -> otro | defecto
+
+## DESDE (FOR)
+
+DESDE -> desde + tkn_opening_par + ASIG + tkn_semicolon + EXP + tkn_semicolon + ASIG_INC_FUNC_LLAM1 + tkn_closing_par + SEC + fin 
+
+## MIENTRAS
+
+MIENTRAS -> mientras + EXP + SEC + fin
+
+## PARA (FOR)
+
+PARA -> para + id + en + rango + tkn_opening_par + PARA_ARG + SEC + fin
+
+PARA_ARG -> tkn_real + PARA_ARG1
+
+PARA_ARG1 -> tkn_comma + tkn_real + PARA_ARG2
+PARA_ARG1 -> tkn_closing_par
+
+PARA_ARG2 -> tkn_comma + tkn_real + tkn_closing_par
+PARA_ARG2 -> tkn_closing_par
+
+## REPETIR
+
+REPETIR -> repetir + SEC + hasta + EXP
+
+## FUNC_RESERV
+
+FUNC_RESERV -> FUNC_RESERV1 + tkn_opening_par + ARG_EXP 
+FUNC_RESERV -> FUNC_RESERV2 + tkn_opening_par + ARG_EXP 
+FUNC_RESERV1 -> tipo | acadena | alogico | anumero | leer
+FUNC_RESERV2 -> escribir | imprimir | poner | imprimirf | limpiar | error
