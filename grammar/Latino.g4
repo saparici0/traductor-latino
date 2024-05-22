@@ -89,23 +89,21 @@ list
     | '[' exp (',' exp)* ']'
     ;
 
-// Dictionaries
-dic
+dic // DICCIONARIOS
     : '{' '}'
     | '{' expv ':' ( exp | funcalt )  (',' expv ':' ( exp | funcalt ) )* '}'
     ;
 
-// Conditionals
-si
-    : 'si' exp sec (osi)* (sino)? 'fin'
+si // CONDICIONAL SI
+    : 'si' exp secnovac (osi)* (sino)? 'fin'
     ;
 
 osi
-    : 'osi' exp sec
+    : 'osi' exp secnovac
     ;
 
 sino
-    : 'sino' sec
+    : 'sino' secnovac
     ;
 
 elegir
