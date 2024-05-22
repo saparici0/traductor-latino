@@ -171,7 +171,7 @@ OTRO_PC -> otro | defecto
 
 ## DESDE (FOR)
 
-DESDE -> desde + tkn_opening_par + ASIG + tkn_semicolon + EXP + tkn_semicolon + ASIG_INC_FUNC_LLAM1 + tkn_closing_par + SEC + fin 
+DESDE -> desde + tkn_opening_par + ASIG + tkn_semicolon + EXP + tkn_semicolon + ASIG_INC_FUNC_LLAM + tkn_closing_par + SEC + fin
 
 ## MIENTRAS
 
