@@ -1,6 +1,6 @@
 import java.io.File;
 
-public class TraductorPython extends LatinoBaseListener {
+public class TraductorPythonListener extends LatinoBaseListener {
     File file = new File("../file.py");
 
     @Override

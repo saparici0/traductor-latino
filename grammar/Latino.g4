@@ -198,11 +198,11 @@ RETORNAR
     : ('retornar' | 'retorno' | 'ret')
     ;
 
- FUNC
+FUNC
     : ( 'fun' | 'funcion' )
     ;
 
- OP // OPERADORES
+OP // OPERADORES
     : ( '+' | '-' | '*' | '/' | '%' | '^' ) // ARITMETICA
     | ( '==' | '!=' | '>' | '<' | '>=' | '<=' | '~=' ) // RELACIONALES
     | ( '&&' | '||' ) // LOGICOS
