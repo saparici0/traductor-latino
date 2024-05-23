@@ -29,4 +29,11 @@ public class TraductorPython extends LatinoBaseListener {
             System.out.println(ctx.ID() + " -= 1");
         }
     }
+
+    @Override
+    public void enterSi(LatinoParser.SiContext ctx) {
+        System.out.println("if " + ctx.exp().getText() + ":" + );
+    }
+
+
 }
