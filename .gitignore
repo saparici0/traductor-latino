@@ -37,3 +37,4 @@ bin/
 /gen/LatinoListener.java
 /gen/LatinoParser.java
 /gen/LatinoVisitor.java
+/.idea/

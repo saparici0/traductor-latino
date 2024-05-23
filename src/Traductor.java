@@ -20,12 +20,8 @@ public class Traductor {
 
         // Create a generic parse tree walker that can trigger callbacks
         ParseTreeWalker walker = new ParseTreeWalker();
-        // Walk the tree created during the parse, trigger callbacks
-        walker.walk(new TraductorPython(), tree);
-        System.out.println(); // print a \n after translation
 
-
-
-
+        TraductorPythonVisitor loader = new TraductorPythonVisitor();
+        loader.visit(tree);
     }
 }
