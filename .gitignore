@@ -27,4 +27,13 @@ bin/
 
 ### Mac OS ###
 .DS_Store
-/gen/
+/gen/Latino.interp
+/gen/Latino.tokens
+/gen/LatinoBaseListener.java
+/gen/LatinoBaseVisitor.java
+/gen/LatinoLexer.java
+/gen/LatinoLexer.interp
+/gen/LatinoLexer.tokens
+/gen/LatinoListener.java
+/gen/LatinoParser.java
+/gen/LatinoVisitor.java
