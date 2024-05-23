@@ -1,5 +1,11 @@
 grammar Latino;
 
+gram
+    : sec EOF
+    | EOF
+    |
+    ;
+
 sec
     : secnovac
     |
@@ -41,8 +47,7 @@ args
     ;
 
 incr
-    : ID '++'
-    | ID '--'
+    : ID INCR
     ;
 
 asig
@@ -171,6 +176,10 @@ WS
 
 OP_ASIG
     : ('=' | '+=' | '-=' | '*=' | '/=' | '%=')
+    ;
+
+INCR
+    : ( '++' | '--' )
     ;
 
 FUNCRESERVRET
