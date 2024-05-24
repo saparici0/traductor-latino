@@ -63,8 +63,8 @@ asigadc
 
 exp
     : ( SUM | NOT) exp
-    | '(' exp ')' ( (OP | SUM) exp)*
-    | val ((OP | SUM) exp)*
+    | '(' exp ')' ( OPP exp)*
+    | val ( OPP exp)*
     ;
 
 val
@@ -158,7 +158,7 @@ funcreserv
 expv
     : '(' + expv + ')'
     | CADENA
-    | exp (OP | SUM) exp
+    | exp OPP exp
     ;
 
 // NO TERMINALES
@@ -211,6 +211,11 @@ RETORNAR
 
 FUNC
     : ( 'fun' | 'funcion' )
+    ;
+
+OPP
+    : OP
+    | SUM
     ;
 
 OP // OPERADORES
