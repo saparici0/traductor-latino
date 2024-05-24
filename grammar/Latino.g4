@@ -62,9 +62,9 @@ asigadc
 // Expressions
 
 exp
-    : OPI exp
-    | '(' exp ')' (OP exp)*
-    | val (OP exp)*
+    : ( SUM | NOT) exp
+    | '(' exp ')' ( (OP | SUM) exp)*
+    | val ((OP | SUM) exp)*
     ;
 
 val
@@ -158,7 +158,7 @@ funcreserv
 expv
     : '(' + expv + ')'
     | CADENA
-    | exp OP exp
+    | exp (OP | SUM) exp
     ;
 
 // NO TERMINALES
@@ -179,10 +179,6 @@ WS
 
 OP_ASIG
     : ('=' | '+=' | '-=' | '*=' | '/=' | '%=')
-    ;
-
-OPI
-    : ( '!' | '+' | '-' )
     ;
 
 INCR
@@ -218,10 +214,18 @@ FUNC
     ;
 
 OP // OPERADORES
-    : ( '+' | '-' | '*' | '/' | '%' | '^' ) // ARITMETICA
+    : ('*' | '/' | '%' | '^' ) // ARITMETICA
     | ( '==' | '!=' | '>' | '<' | '>=' | '<=' | '~=' ) // RELACIONALES
     | ( '&&' | '||' ) // LOGICOS
     | '..' // DE CADENA
+    ;
+
+SUM
+    : ( '+' | '-' )
+    ;
+
+NOT
+    : '!'
     ;
 
 // ---
