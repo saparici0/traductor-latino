@@ -1,4 +1,4 @@
-public class TraductorPythonVisitor extends LatinoBaseVisitor{
+public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
     private int nivelIdent = 0;
 
     @Override
