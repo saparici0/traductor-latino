@@ -31,7 +31,6 @@ public class TraductorPythonVisitor extends LatinoBaseVisitor{
             visitFuncalt(ctx.funcalt());
             visitAsigadc(ctx.asigadc());
         }
-
         return 0;
     }
 
@@ -165,14 +164,14 @@ public class TraductorPythonVisitor extends LatinoBaseVisitor{
     @Override
     public Object visitDictargs(LatinoParser.DictargsContext ctx) {
         if (ctx.ID() != null) {
-            System.out.print('[');
+            System.out.print("[");
             System.out.print(ctx.ID().getText());
-            System.out.print(']');
+            System.out.print("]");
             visitDictargs(ctx.dictargs());
         } else if (ctx.expv() != null) {
-            System.out.print('[');
+            System.out.print("[");
             visitExpv(ctx.expv());
-            System.out.print(']');
+            System.out.print("]");
         }
         return 0;
     }
@@ -206,9 +205,6 @@ public class TraductorPythonVisitor extends LatinoBaseVisitor{
 
     @Override
     public Object visitDesde(LatinoParser.DesdeContext ctx) {
-//        if(ctx.asig(0).ID().size() > 1) {
-//            print
-//        }
         System.out.print(" ".repeat(nivelIdent * 4) + ctx.asig(0).getText());
 
         System.out.print("\n" + " ".repeat(nivelIdent * 4) + "while ");
@@ -245,7 +241,7 @@ public class TraductorPythonVisitor extends LatinoBaseVisitor{
 
     @Override
     public Object visitMientras(LatinoParser.MientrasContext ctx) {
-        System.out.print(" ".repeat(nivelIdent * 4)+"while ");
+        System.out.print(" ".repeat(nivelIdent * 4) + "while ");
         System.out.print(ctx.exp().getText());
         System.out.println(" :");
         nivelIdent++;
