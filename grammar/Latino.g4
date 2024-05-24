@@ -68,7 +68,7 @@ val
     | funcreservret
     | list
     | dic
-    | ( REAL | 'cierto' | 'verdadero' | 'falso' | CADENA | 'nulo' )
+    | ( REAL | BOOL| CADENA | NULO )
     ;
 
 // Functions
@@ -194,6 +194,14 @@ FUNCRESERV
 
 OTRO
     : ( 'otro' | 'defecto' )
+    ;
+
+BOOL
+    : ( 'cierto' | 'verdadero' | 'falso' )
+    ;
+
+NULO
+    : 'nulo'
     ;
 
 RETORNAR
