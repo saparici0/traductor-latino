@@ -152,7 +152,9 @@ funcreservret
     ;
 
 funcreserv
-    : FUNCRESERV args
+    : FUNCRESERVF args
+    | FUNCRESERV0 '(' ')'
+    | FUNCRESERV1 '(' exp ')'
     ;
 
 expv
@@ -190,7 +192,21 @@ FUNCRESERVRET
     ;
 
 FUNCRESERV
-    : ( 'escribir' | 'imprimir' | 'poner' | 'imprimirf' | 'limpiar' | 'error' )
+    : FUNCRESERV0
+    | FUNCRESERV1
+    | FUNCRESERVF
+    ;
+
+FUNCRESERV0
+    : 'limpiar'
+    ;
+
+FUNCRESERV1
+    : ( 'escribir' | 'imprimir' | 'poner' | 'error' )
+    ;
+
+FUNCRESERVF
+    : 'imprimirf'
     ;
 
 OTRO
