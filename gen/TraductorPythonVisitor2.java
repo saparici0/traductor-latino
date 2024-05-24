@@ -257,7 +257,6 @@ public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
         return super.visitFuncalt(ctx);
     }
 
-
     @Override
     public Object visitFuncreserv(LatinoParser.FuncreservContext ctx) {
         if(ctx.FUNCRESERV1() != null){
