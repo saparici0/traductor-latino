@@ -152,7 +152,7 @@ funcreservret
     ;
 
 funcreserv
-    : FUNCRESERVF args
+    : IMPRIMIRF '(' CADENA (',' exp)* ')'
     | FUNCRESERV0 '(' ')'
     | FUNCRESERV1 '(' exp ')'
     ;
@@ -194,7 +194,7 @@ FUNCRESERVRET
 FUNCRESERV
     : FUNCRESERV0
     | FUNCRESERV1
-    | FUNCRESERVF
+    | IMPRIMIRF
     ;
 
 FUNCRESERV0
@@ -205,7 +205,7 @@ FUNCRESERV1
     : ( 'escribir' | 'imprimir' | 'poner' | 'error' )
     ;
 
-FUNCRESERVF
+IMPRIMIRF
     : 'imprimirf'
     ;
 
