@@ -57,9 +57,7 @@ asig
 // Expressions
 
 exp
-    : '!' exp
-    | '+' exp
-    | '-' exp
+    : OPI exp
     | '(' exp ')' (OP exp)*
     | val (OP exp)*
     ;
@@ -176,6 +174,10 @@ WS
 
 OP_ASIG
     : ('=' | '+=' | '-=' | '*=' | '/=' | '%=')
+    ;
+
+OPI
+    : ( '!' | '+' | '-' )
     ;
 
 INCR

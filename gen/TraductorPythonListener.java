@@ -32,8 +32,7 @@ public class TraductorPythonListener extends LatinoBaseListener {
 
     @Override
     public void enterSi(LatinoParser.SiContext ctx) {
-        System.out.println("if " + ctx.exp().getText() + ":" + );
+        System.out.println("if " + ctx.exp().getText() + ":");
     }
-
 
 }
