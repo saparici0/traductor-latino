@@ -191,11 +191,6 @@ FUNCRESERVRET
     : ( 'tipo' | 'acadena' | 'alogico' | 'anumero' | 'leer' )
     ;
 
-FUNCRESERV
-    : FUNCRESERV0
-    | FUNCRESERV1
-    | IMPRIMIRF
-    ;
 
 FUNCRESERV0
     : 'limpiar'

@@ -7,6 +7,8 @@ funcion fib(n)
    mientras a < n
      a,b = b, a+b
      escribir(a)
+     error("probl")
+     imprimirf("%s", nombre)
    fin
 fin
 
