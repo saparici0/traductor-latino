@@ -51,7 +51,12 @@ incr
     ;
 
 asig
-    : ID (',' ID)* OP_ASIG ( exp | funcalt ) (',' ( exp | funcalt ) )*
+    : ID (',' ID)* OP_ASIG ( exp | funcalt ) asigadc
+    ;
+
+asigadc
+    : ',' ( exp | funcalt ) asigadc
+    |
     ;
 
 // Expressions

@@ -9,9 +9,7 @@ public class TraductorPythonVisitor extends LatinoBaseVisitor{
             for (int i = 1; i < nvars; i++) System.out.print(", " + ctx.ID(i).getText());
         }
         System.out.print(" " + ctx.OP_ASIG().getText() + " ");
-        for (int i = 1; i < ctx.getChildCount(); i++) System.out.println(ctx.getChild(i).getClass().toString());
-
-
+        
 
         return super.visitAsig(ctx);
     }
