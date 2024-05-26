@@ -274,8 +274,26 @@ public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
             }
         }
         else if(ctx.IMPRIMIRF() != null){
-            System.out.print(" ".repeat(nivelIdent * 4)+"print(f");
-
+            System.out.print(" ".repeat(nivelIdent * 4)+"print(");
+            System.out.print(ctx.CADENA().getText());
+            if(ctx.exp() != null){
+                for(int i = 0; i < ctx.exp().size(); i++){
+                    if(i==0){
+                        if(i == ctx.exp().size()-1){
+                            System.out.print(" % ("+ctx.exp(i).getText()+"))");
+                        }
+                        else {
+                            System.out.print(" % (" + ctx.exp(i).getText());
+                        }
+                    }
+                    else if(i==ctx.exp().size()-1){
+                        System.out.print(", "+ctx.exp(i).getText()+"))");
+                    }
+                    else{
+                        System.out.print(", " + ctx.exp(i).getText());
+                    }
+                }
+            }
             System.out.println();
         }
 
@@ -284,6 +302,29 @@ public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
             System.out.println();
         }
 
+        return 0;
+    }
+
+    @Override
+    public Object visitFuncreservret(LatinoParser.FuncreservretContext ctx) {
+        if(ctx.FUNCRESERVRET() != null){
+            if(ctx.FUNCRESERVRET().getText().equals("tipo")){
+                System.out.print("type");
+                visitArgs(ctx.args());
+            } else if(ctx.FUNCRESERVRET().getText().equals("acadena")){
+                System.out.print("str");
+                visitArgs(ctx.args());
+            } else if (ctx.FUNCRESERVRET().getText().equals("alogico")) {
+                System.out.print("bool");
+                visitArgs(ctx.args());
+            } else if (ctx.FUNCRESERVRET().getText().equals("anumero")) {
+                System.out.print("float");
+                visitArgs(ctx.args());
+            }
+            else{//fct leer()
+                System.out.print("leer()");
+            }
+        }
         return 0;
     }
 
