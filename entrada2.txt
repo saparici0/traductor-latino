@@ -23,3 +23,56 @@ n1=(2/3)*5+2^2
  n2=50+22 / (14-7) % 2
  // imprimimos los valores
  escribir( n1.. ' ' .. n2)
+
+ /* fun my_function[]
+ imprimir("asi no era *smile in full pain")
+ fin */
+
+ fun feature1()
+ ret "play music"
+ fin
+
+ //fun feature2()
+
+ /* funcion function(x)
+
+        retornar {"a":acadena(23*(1/2)),anumero(12*x):acadena(x)
+        .. '"etwas mehr"'
+        }
+ fin
+*/
+ imprimir(function(45.9^2))
+
+ atencion=[0,0,0]
+
+ atencion[2%2]=1
+ /* :v */
+ // (ups, tengo que indicar el comentario :v)
+
+ fun xde()
+
+ mientras a<100
+
+ si a==90
+ romper
+ fin
+
+ fin
+
+ //retorno
+
+ fin
+
+___a___ = leer()
+
+imprimirf("%c",___a___)
+
+ x[alguna_posicion]
+                       =
+                                    2*5.0/x[1]
+  escribir( y.imprimir)
+  // verdad que imprimir es una palabra reservada
+  r=alguna_funcion(fun,cion)
+
+  /**/
+  EOF = '\'yes\''

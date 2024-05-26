@@ -118,7 +118,7 @@ public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
 
     @Override
     public Object visitFunc(LatinoParser.FuncContext ctx) {
-        System.out.print(" ".repeat(nivelIdent * 4) + "def " + ctx.ID().getText());
+        System.out.print("\n"+" ".repeat(nivelIdent * 4) + "def " + ctx.ID().getText());
         visitArgs(ctx.args());
         System.out.println(":");
         nivelIdent++;
@@ -356,7 +356,7 @@ public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
 
     @Override
     public Object visitRomper(LatinoParser.RomperContext ctx) {
-        System.out.println("break");
+        System.out.println(" ".repeat(nivelIdent * 4)+"break");
         return 0;
     }
 }
