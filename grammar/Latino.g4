@@ -37,9 +37,8 @@ llamfunc
     ;
 
 dictargs
-    : '[' expv ']' dictargs
+    : '[' expv ']' (dictargs)*
     | '.' ID dictargs
-    |
     ;
 
 args

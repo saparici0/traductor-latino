@@ -2,6 +2,12 @@ public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
     private int nivelIdent = 0;
 
     @Override
+    public Object visitSec (LatinoParser.SecContext ctx) {
+        super.visitSec(ctx);
+        return 0;
+    }
+
+    @Override
     public Object visitAsig(LatinoParser.AsigContext ctx) {
         System.out.print(" ".repeat(nivelIdent * 4) + ctx.ID(0).getText());
         int nvars = ctx.ID().size();
@@ -16,7 +22,6 @@ public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
             visitFuncalt(ctx.funcalt());
         }
         visitAsigadc(ctx.asigadc());
-        System.out.println();
         return 0;
     }
 
@@ -39,7 +44,7 @@ public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
     public Object visitSi(LatinoParser.SiContext ctx) {
         System.out.print(" ".repeat(nivelIdent * 4) + "if ");
         visitExp(ctx.exp());
-        System.out.println(":");
+        System.out.print(":");
 
         nivelIdent++;
         visitSecnovac(ctx.secnovac());
@@ -56,7 +61,7 @@ public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
     public Object visitOsi(LatinoParser.OsiContext ctx) {
         System.out.print(" ".repeat(nivelIdent * 4) + "elif ");
         visitExp(ctx.exp());
-        System.out.println(":");
+        System.out.print(":");
         nivelIdent++;
         visitSecnovac(ctx.secnovac());
         nivelIdent--;
@@ -120,11 +125,10 @@ public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
     public Object visitFunc(LatinoParser.FuncContext ctx) {
         System.out.print("\n"+" ".repeat(nivelIdent * 4) + "def " + ctx.ID().getText());
         visitArgs(ctx.args());
-        System.out.println(":");
+        System.out.print(":");
         nivelIdent++;
         visitSecnovac(ctx.secnovac());
         nivelIdent--;
-        System.out.println();
         return 0;
     }
 
@@ -179,6 +183,7 @@ public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
 
     @Override
     public Object visitSecnovac(LatinoParser.SecnovacContext ctx) {
+        System.out.println();
         visitChildren(ctx);
         return 0;
     }
@@ -197,9 +202,9 @@ public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
     public Object visitIncr(LatinoParser.IncrContext ctx) {
         System.out.print(" ".repeat(nivelIdent * 4) + ctx.ID());
         if (ctx.INCR().getText().equals("++")) {
-            System.out.println(" += 1");
+            System.out.print(" += 1");
         } else {
-            System.out.println(" -= 1");
+            System.out.print(" -= 1");
         }
         return 0;
     }
@@ -210,9 +215,10 @@ public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
 
         System.out.print("\n" + " ".repeat(nivelIdent * 4) + "while ");
         System.out.print(ctx.exp().getText());
-        System.out.println(" :");
+        System.out.print(" :");
         nivelIdent++;
         visitSec(ctx.sec());
+        System.out.println();
         if(ctx.asig().size() > 1) {
             visitAsig(ctx.asig(1));
         }
@@ -232,7 +238,7 @@ public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
         System.out.print(ctx.ID().getText());
         System.out.print(" in range");
         System.out.print(ctx.paraargs().getText());
-        System.out.println(":");
+        System.out.print(":");
         nivelIdent++;
         visitSec(ctx.sec());
         System.out.print("\n");
@@ -244,7 +250,7 @@ public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
     public Object visitMientras(LatinoParser.MientrasContext ctx) {
         System.out.print(" ".repeat(nivelIdent * 4) + "while ");
         System.out.print(ctx.exp().getText());
-        System.out.println(" :");
+        System.out.print(" :");
         nivelIdent++;
         visitSec(ctx.sec());
         System.out.print("\n");
@@ -264,13 +270,13 @@ public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
                 System.out.print(" ".repeat(nivelIdent * 4)+"print(");
                 visitExp(ctx.exp(0));
 
-                System.out.println(")");
+                System.out.print(")");
             }
             else{
                 System.out.print(" ".repeat(nivelIdent * 4)+"raise ValueError(");
                 visitExp(ctx.exp(0));
 
-                System.out.println(")");
+                System.out.print(")");
             }
         }
         else if(ctx.IMPRIMIRF() != null){
@@ -294,12 +300,10 @@ public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
                     }
                 }
             }
-            System.out.println();
         }
 
         else {
             System.out.print(" ".repeat(nivelIdent * 4)+"os.system('clear')");
-            System.out.println();
         }
 
         return 0;
@@ -332,7 +336,6 @@ public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
     public Object visitRetornar(LatinoParser.RetornarContext ctx) {
         System.out.print(" ".repeat(nivelIdent * 4) + "return ");
         visitExp(ctx.exp());
-        System.out.println();
         return 0;
     }
 
@@ -356,7 +359,7 @@ public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
 
     @Override
     public Object visitRomper(LatinoParser.RomperContext ctx) {
-        System.out.println(" ".repeat(nivelIdent * 4)+"break");
+        System.out.print(" ".repeat(nivelIdent * 4)+"break");
         return 0;
     }
 }

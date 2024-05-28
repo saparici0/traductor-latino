@@ -20,17 +20,17 @@ fin
 fib(1000)
 
 n1=(2/3)*5+2^2
- n2=50+22 / (14-7) % 2
- // imprimimos los valores
- escribir( n1.. ' ' .. n2)
+n2=50+22 / (14-7) % 2
+// imprimimos los valores
+escribir( n1.. ' ' .. n2)
 
- /* fun my_function[]
- imprimir("asi no era *smile in full pain")
- fin */
+/* fun my_function[]
+imprimir("asi no era *smile in full pain")
+fin */
 
- fun feature1()
- ret "play music"
- fin
+fun feature1()
+ret "play music"
+fin
 
  //fun feature2()
 
@@ -70,9 +70,9 @@ imprimirf("%c",___a___)
  x[alguna_posicion]
                        =
                                     2*5.0/x[1]
-  escribir( y.imprimir)
+  escribir(y)
   // verdad que imprimir es una palabra reservada
-  r=alguna_funcion(fun,cion)
+  r=alguna_funcion(funcion fibo)
 
   /**/
   EOF = '\'yes\''
