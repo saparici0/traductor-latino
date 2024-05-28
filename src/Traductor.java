@@ -18,7 +18,7 @@ public class Traductor {
         LatinoParser parser = new LatinoParser(tokens);
         ParseTree tree = parser.gram(); // begin parsing at init rule
 
-        TraductorPythonVisitor2 loader = new TraductorPythonVisitor2();
+        TraductorPythonVisitor loader = new TraductorPythonVisitor();
         loader.visit(tree);
     }
 }

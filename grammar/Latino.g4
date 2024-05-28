@@ -37,7 +37,7 @@ llamfunc
     ;
 
 dictargs
-    : '[' expv ']' dictargs
+    : '[' expllave ']' dictargs
     | '.' ID dictargs
     |
     ;
@@ -51,7 +51,7 @@ incr
     ;
 
 asig
-    : ID (',' ID)* OP_ASIG ( exp | funcalt ) asigadc
+    : ID dictargs (',' ID dictargs)* OP_ASIG ( exp | funcalt ) asigadc
     ;
 
 asigadc
@@ -62,9 +62,9 @@ asigadc
 // Expressions
 
 exp
-    : ( SUM | NOT) exp
-    | '(' exp ')' ( OPP exp)*
-    | val ( OPP exp)*
+    : NOT exp
+    | '(' exp ')' (OPP exp)*
+    | val (OPP exp)*
     ;
 
 val
@@ -99,7 +99,7 @@ list
 
 dic // DICCIONARIOS
     : '{' '}'
-    | '{' expv ':' ( exp | funcalt )  (',' expv ':' ( exp | funcalt ) )* '}'
+    | '{' expllave ':' ( exp | funcalt )  (',' expllave ':' ( exp | funcalt ) )* '}'
     ;
 
 si // CONDICIONAL SI
@@ -157,10 +157,22 @@ funcreserv
     | FUNCRESERV1 '(' exp ')'
     ;
 
-expv
-    : '(' + expv + ')'
+expllavecad
+    : '(' + expllavecad + ')'
     | CADENA
+    ;
+
+expllave
+    : '(' + expllave + ')'
+    | valllave
     | exp OPP exp
+    ;
+
+valllave
+    : ID dictargs
+    | llamfunc
+    | funcreservret
+    | ( REAL | BOOL| CADENA | NULO )
     ;
 
 // NO TERMINALES
@@ -170,7 +182,7 @@ COMENTARIO
     ;
 
 COMENTARIOLINEA
-    : '//' ~[\r\n]* -> skip
+    : ( '//' | '#' ) ~[\r\n]* -> skip
     ;
 
 WS
