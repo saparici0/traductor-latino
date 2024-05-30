@@ -20,7 +20,7 @@ public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
             if (ctx.funcalt() != null) {
                 System.out.print(" ".repeat(nivelIdent * 4) + "def " + ctx.ID(0).getText());
                 visitArgs(ctx.funcalt().args());
-                System.out.println(" :");
+                System.out.print(" :");
                 nivelIdent++;
                 visitSecnovac(ctx.funcalt().secnovac());
                 nivelIdent--;
@@ -36,7 +36,7 @@ public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
                 if (ctx.asigadc(i).funcalt() != null) {
                     System.out.print(" ".repeat(nivelIdent * 4) + "def " + ctx.ID(i+1).getText());
                     visitArgs(ctx.asigadc(i).funcalt().args());
-                    System.out.println(" :");
+                    System.out.print(" :");
                     nivelIdent++;
                     visitSecnovac(ctx.asigadc(i).funcalt().secnovac());
                     nivelIdent--;
@@ -80,7 +80,7 @@ public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
     public Object visitSi(LatinoParser.SiContext ctx) {
         System.out.print(" ".repeat(nivelIdent * 4) + "if ");
         visitExp(ctx.exp());
-        System.out.println(":");
+        System.out.print(":");
 
         nivelIdent++;
         visitSecnovac(ctx.secnovac());
@@ -120,16 +120,16 @@ public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
             visitExp(ctx.exp(0));
         } else if (ctx.val() != null) {
             visitVal(ctx.val());
-            for (int i = 0; i < ctx.OPP().size(); i++) {
-                System.out.print(" " + ctx.OPP(i).getText() + " ");
+            for (int i = 0; i < ctx.OP().size(); i++) {
+                System.out.print(" " + ctx.OP(i).getText() + " ");
                 visitExp(ctx.exp(i));
             }
         } else {
             System.out.print("(");
             visitExp(ctx.exp(0));
             System.out.print(")");
-            for (int i = 0; i < ctx.OPP().size(); i++) {
-                System.out.print(ctx.OPP(i).getText());
+            for (int i = 0; i < ctx.OP().size(); i++) {
+                System.out.print(ctx.OP(i).getText());
                 visitExp(ctx.exp(i));
             }
         }
@@ -160,7 +160,7 @@ public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
             visitValllave(ctx.valllave());
         } else if (!ctx.exp().isEmpty()){
             visitExp(ctx.exp(0));
-            System.out.print(ctx.OPP().getText());
+            System.out.print(ctx.OP().getText());
             visitExp(ctx.exp(1));
         } else {
             System.out.print("(");
@@ -446,5 +446,4 @@ public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
 
         return 0;
     }
-
 }

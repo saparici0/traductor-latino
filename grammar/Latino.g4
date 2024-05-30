@@ -1,7 +1,7 @@
 grammar Latino;
 
 gram
-    : sec EOF
+    : sec
     | EOF
     |
     ;
@@ -62,8 +62,8 @@ asigadc
 
 exp
     : NOT exp
-    | '(' exp ')' (OPP exp)*
-    | val (OPP exp)*
+    | '(' exp ')' (OP exp)*
+    | val (OP exp)*
     ;
 
 val
@@ -139,7 +139,7 @@ para
     ;
 
 paraargs
-    : '(' ('-')? REAL (',' ('-')? REAL)? (',' ('-')? REAL)? ')' // AMBIGUEDAD
+    : '(' REAL (',' REAL)? (',' REAL)? ')' // AMBIGUEDAD
     ;
 
 repetir
@@ -164,7 +164,7 @@ expllavecad
 expllave
     : '(' + expllave + ')'
     | valllave
-    | exp OPP exp
+    | exp OP exp
     ;
 
 valllave
@@ -234,20 +234,11 @@ FUNC
     : ( 'fun' | 'funcion' )
     ;
 
-OPP
-    : OP
-    | SUM
-    ;
-
 OP // OPERADORES
-    : ('*' | '/' | '%' | '^' ) // ARITMETICA
+    : ( '-' | '+' | '*' | '/' | '%' | '^' ) // ARITMETICA
     | ( '==' | '!=' | '>' | '<' | '>=' | '<=' | '~=' ) // RELACIONALES
     | ( '&&' | '||' ) // LOGICOS
     | '..' // DE CADENA
-    ;
-
-SUM
-    : ( '+' | '-' )
     ;
 
 NOT
