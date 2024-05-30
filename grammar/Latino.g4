@@ -1,7 +1,7 @@
 grammar Latino;
 
 gram
-    : sec EOF
+    : sec
     | EOF
     |
     ;
@@ -51,20 +51,19 @@ incr
     ;
 
 asig
-    : ID dictargs (',' ID dictargs)* OP_ASIG ( exp | funcalt ) asigadc
+    : ID dictargs (',' ID dictargs)* OP_ASIG ( exp | funcalt ) (',' asigadc)*
     ;
 
 asigadc
-    : ',' ( exp | funcalt ) asigadc
-    |
+    : ( exp | funcalt )
     ;
 
 // Expressions
 
 exp
     : NOT exp
-    | '(' exp ')' (OPP exp)*
-    | val (OPP exp)*
+    | '(' exp ')' (OP exp)*
+    | val (OP exp)*
     ;
 
 val
@@ -140,7 +139,7 @@ para
     ;
 
 paraargs
-    : '(' ('-')? REAL (',' ('-')? REAL)? (',' ('-')? REAL)? ')' // AMBIGUEDAD
+    : '(' REAL (',' REAL)? (',' REAL)? ')' // AMBIGUEDAD
     ;
 
 repetir
@@ -165,7 +164,7 @@ expllavecad
 expllave
     : '(' + expllave + ')'
     | valllave
-    | exp OPP exp
+    | exp OP exp
     ;
 
 valllave
@@ -235,20 +234,11 @@ FUNC
     : ( 'fun' | 'funcion' )
     ;
 
-OPP
-    : OP
-    | SUM
-    ;
-
 OP // OPERADORES
-    : ('*' | '/' | '%' | '^' ) // ARITMETICA
+    : ( '-' | '+' | '*' | '/' | '%' | '^' ) // ARITMETICA
     | ( '==' | '!=' | '>' | '<' | '>=' | '<=' | '~=' ) // RELACIONALES
     | ( '&&' | '||' ) // LOGICOS
     | '..' // DE CADENA
-    ;
-
-SUM
-    : ( '+' | '-' )
     ;
 
 NOT

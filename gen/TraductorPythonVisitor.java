@@ -9,19 +9,61 @@ public class TraductorPythonVisitor extends LatinoBaseVisitor{
 
     @Override
     public Object visitAsig(LatinoParser.AsigContext ctx) {
-        System.out.print(" ".repeat(nivelIdent * 4) + ctx.ID(0).getText());
-        int nvars = ctx.ID().size();
-        if (nvars > 1) {
-            for (int i = 1; i < nvars; i++) System.out.print(", " + ctx.ID(i).getText());
+        int k = 0;
+        for(int j = 0; j < ctx.asigadc().size(); j++){
+            if(ctx.asigadc(j).funcalt() != null){
+                k += 1;
+            }
         }
-        System.out.print(" " + ctx.OP_ASIG().getText() + " ");
-        if(ctx.exp() != null){
-            visit(ctx.exp());
+
+        if (ctx.funcalt() != null || k != 0) {
+            if (ctx.funcalt() != null) {
+                System.out.print(" ".repeat(nivelIdent * 4) + "def " + ctx.ID(0).getText());
+                visitArgs(ctx.funcalt().args());
+                System.out.println(" :");
+                nivelIdent++;
+                visitSecnovac(ctx.funcalt().secnovac());
+                nivelIdent--;
+                System.out.println();
+            } else {
+                System.out.print(" ".repeat(nivelIdent * 4) + ctx.ID(0).getText());
+                System.out.print(" " + ctx.OP_ASIG().getText() + " ");
+                visit(ctx.exp());
+                System.out.println();
+            }
+
+            for (int i = 0; i < ctx.asigadc().size(); i++) {
+                if (ctx.asigadc(i).funcalt() != null) {
+                    System.out.print(" ".repeat(nivelIdent * 4) + "def " + ctx.ID(i+1).getText());
+                    visitArgs(ctx.asigadc(i).funcalt().args());
+                    System.out.println(" :");
+                    nivelIdent++;
+                    visitSecnovac(ctx.asigadc(i).funcalt().secnovac());
+                    nivelIdent--;
+                    System.out.println();
+                }
+                else{
+                    System.out.print(" ".repeat(nivelIdent * 4) + ctx.ID(i+1).getText());
+                    System.out.print(" " + ctx.OP_ASIG().getText() + " ");
+                    visit(ctx.asigadc(i).exp());
+                    System.out.println();
+                }
+            }
         }
-        else{
-            visitFuncalt(ctx.funcalt());
+        else {
+            System.out.print(" ".repeat(nivelIdent * 4) + ctx.ID(0).getText());
+            int nvars = ctx.ID().size();
+            if (nvars > 1) {
+                for (int i = 1; i < nvars; i++) System.out.print(", " + ctx.ID(i).getText());
+            }
+            System.out.print(" " + ctx.OP_ASIG().getText() + " ");
+            if (ctx.exp() != null) {
+                visitExp(ctx.exp());
+            }
+            for (int i = 0; i < ctx.asigadc().size(); i++){
+                visitExp(ctx.asigadc(i).exp());
+            }
         }
-        visitAsigadc(ctx.asigadc());
         return 0;
     }
 
@@ -30,12 +72,6 @@ public class TraductorPythonVisitor extends LatinoBaseVisitor{
         if(ctx.exp() != null){
             System.out.print(", ");
             visitExp(ctx.exp());
-            visitAsigadc(ctx.asigadc());
-        }
-        else if(ctx.funcalt() != null) {
-            System.out.print(", ");
-            visitFuncalt(ctx.funcalt());
-            visitAsigadc(ctx.asigadc());
         }
         return 0;
     }
@@ -44,7 +80,7 @@ public class TraductorPythonVisitor extends LatinoBaseVisitor{
     public Object visitSi(LatinoParser.SiContext ctx) {
         System.out.print(" ".repeat(nivelIdent * 4) + "if ");
         visitExp(ctx.exp());
-        System.out.println(":");
+        System.out.print(":");
 
         nivelIdent++;
         visitSecnovac(ctx.secnovac());
@@ -84,16 +120,16 @@ public class TraductorPythonVisitor extends LatinoBaseVisitor{
             visitExp(ctx.exp(0));
         } else if (ctx.val() != null) {
             visitVal(ctx.val());
-            for (int i = 0; i < ctx.OPP().size(); i++) {
-                System.out.print(" " + ctx.OPP(i).getText() + " ");
+            for (int i = 0; i < ctx.OP().size(); i++) {
+                System.out.print(" " + ctx.OP(i).getText() + " ");
                 visitExp(ctx.exp(i));
             }
         } else {
             System.out.print("(");
             visitExp(ctx.exp(0));
             System.out.print(")");
-            for (int i = 0; i < ctx.OPP().size(); i++) {
-                System.out.print(ctx.OPP(i).getText());
+            for (int i = 0; i < ctx.OP().size(); i++) {
+                System.out.print(ctx.OP(i).getText());
                 visitExp(ctx.exp(i));
             }
         }
@@ -124,7 +160,7 @@ public class TraductorPythonVisitor extends LatinoBaseVisitor{
             visitValllave(ctx.valllave());
         } else if (!ctx.exp().isEmpty()){
             visitExp(ctx.exp(0));
-            System.out.print(ctx.OPP().getText());
+            System.out.print(ctx.OP().getText());
             visitExp(ctx.exp(1));
         } else {
             System.out.print("(");
@@ -281,7 +317,6 @@ public class TraductorPythonVisitor extends LatinoBaseVisitor{
         if(ctx.FUNCRESERV1() != null){
             if (ctx.FUNCRESERV1().getText().equals("escribir") || ctx.FUNCRESERV1().getText().equals("imprimir") || ctx.FUNCRESERV1().getText().equals("poner")){
                 System.out.print(" ".repeat(nivelIdent * 4)+"print(");
-                System.out.println("asdf " +   ctx.exp().toArray().length);
             }
             else{
                 System.out.print(" ".repeat(nivelIdent * 4)+"raise ValueError(");
@@ -371,6 +406,44 @@ public class TraductorPythonVisitor extends LatinoBaseVisitor{
     @Override
     public Object visitRomper(LatinoParser.RomperContext ctx) {
         System.out.print(" ".repeat(nivelIdent * 4)+"break");
+        return 0;
+    }
+
+    @Override
+    public Object visitRepetir(LatinoParser.RepetirContext ctx){
+        System.out.print(" ".repeat(nivelIdent * 4) + "while ");
+        System.out.print(ctx.exp().getText());
+        System.out.print(" :");
+        nivelIdent++;
+        visitSec(ctx.sec());
+        nivelIdent--;
+        return 0;
+    }
+
+    @Override
+    public Object visitElegir(LatinoParser.ElegirContext ctx){
+        System.out.print(" ".repeat(nivelIdent * 4) + "if ");
+        System.out.print(ctx.exp().getText() + " == " + ctx.caso(0).exp().getText() + ":");
+        nivelIdent++;
+        visitSec(ctx.caso(0).sec());
+        System.out.println();
+        nivelIdent--;
+        for(int i = 1; i < ctx.caso().size(); i++) {
+            System.out.print(" ".repeat(nivelIdent * 4) + "elif ");
+            System.out.print(ctx.exp().getText() + " == " + ctx.caso(i).exp().getText() + ":");
+            nivelIdent++;
+            visitSec(ctx.caso(i).sec());
+            System.out.println();
+            nivelIdent--;
+        }
+        if(ctx.otro() != null){
+            System.out.print(" ".repeat(nivelIdent * 4) + "else: ");
+            nivelIdent++;
+            visitSec(ctx.otro().sec());
+            System.out.println();
+            nivelIdent--;
+        }
+
         return 0;
     }
 }
