@@ -51,12 +51,11 @@ incr
     ;
 
 asig
-    : ID dictargs (',' ID dictargs)* OP_ASIG ( exp | funcalt ) asigadc
+    : ID dictargs (',' ID dictargs)* OP_ASIG ( exp | funcalt ) (',' asigadc)*
     ;
 
 asigadc
-    : ',' ( exp | funcalt ) asigadc
-    |
+    : ( exp | funcalt )
     ;
 
 // Expressions

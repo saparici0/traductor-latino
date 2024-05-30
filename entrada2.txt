@@ -2,6 +2,29 @@ mientras a == 2 && b > 1
 b++
 fin
 
+calificacion = 'B'
+
+elegir(calificacion)
+    caso 'A':
+        escribir("¡Excelente!.")
+    caso 'B':
+        escribir("¡Bien echo!.")
+    caso 'C':
+        escribir("¡Bien echo!.")
+    caso 'D':
+        escribir("Necesitas mejorar.")
+    caso 'F':
+        escribir("Has reprobado.")
+    otro:
+        escribir("Calificación invalida.")
+fin
+
+i = 0
+repetir
+escribir(a)
+i++
+hasta i < 10
+
 funcion fib(n)
  a,b = 0,1
    mientras a < n
@@ -20,7 +43,6 @@ fin
 fib(1000)
 
 n1=(2/3)*5+2^2
-n2=50+22 / (14-7) % 2
 // imprimimos los valores
 escribir( n1.. ' ' .. n2)
 
@@ -72,7 +94,14 @@ imprimirf("%c",___a___)
                                     2*5.0/x[1]
   escribir(y)
   // verdad que imprimir es una palabra reservada
-  r=alguna_funcion(funcion fibo)
+  r=alguna_funcion(fibo)
 
   /**/
-  EOF = '\'yes\''
+  //EOF = '\'yes\''
+
+  a, b, c = fun(x)
+  ret x+1
+  fin,
+    fun (y)
+    ret y-1
+    fin,5
