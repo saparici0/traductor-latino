@@ -20,7 +20,7 @@ public class TraductorPythonVisitor extends LatinoBaseVisitor{
             if (ctx.funcalt() != null) {
                 System.out.print(" ".repeat(nivelIdent * 4) + "def " + ctx.ID(0).getText());
                 visitArgs(ctx.funcalt().args());
-                System.out.println(" :");
+                System.out.print(" :");
                 nivelIdent++;
                 visitSecnovac(ctx.funcalt().secnovac());
                 nivelIdent--;
@@ -36,7 +36,7 @@ public class TraductorPythonVisitor extends LatinoBaseVisitor{
                 if (ctx.asigadc(i).funcalt() != null) {
                     System.out.print(" ".repeat(nivelIdent * 4) + "def " + ctx.ID(i+1).getText());
                     visitArgs(ctx.asigadc(i).funcalt().args());
-                    System.out.println(" :");
+                    System.out.print(" :");
                     nivelIdent++;
                     visitSecnovac(ctx.asigadc(i).funcalt().secnovac());
                     nivelIdent--;
