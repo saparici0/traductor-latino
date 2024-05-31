@@ -1,5 +1,8 @@
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
     private int nivelIdent = 0;
+    private AtomicInteger cont = new AtomicInteger(0);
 
     @Override
     public Object visitSec (LatinoParser.SecContext ctx) {
@@ -15,6 +18,31 @@ public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
                 k += 1;
             }
         }
+
+        if (ctx.funcalt() != null && ctx.dictargs(0).getText() != "") {
+            String funcName = "fun" + cont.getAndIncrement();
+            System.out.print(" ".repeat(nivelIdent * 4) + "def " + funcName);
+            visitArgs(ctx.funcalt().args());
+            System.out.print(" :");
+            nivelIdent++;
+            visitSecnovac(ctx.funcalt().secnovac());
+            nivelIdent--;
+            System.out.println();
+            System.out.print(ctx.ID(0).getText() + ctx.dictargs(0).getText() + '=' + funcName);
+        } else if (ctx.funcalt() != null) {
+            System.out.print(" ".repeat(nivelIdent * 4) + "def " + ctx.ID(0).getText());
+            System.out.print(ctx.dictargs(0).getText());
+            visitArgs(ctx.funcalt().args());
+            System.out.print(" :");
+            nivelIdent++;
+            visitSecnovac(ctx.funcalt().secnovac());
+            nivelIdent--;
+            System.out.println();
+        } else if (k > 0) {
+
+        }
+
+
 
         if (ctx.funcalt() != null || k != 0) {
             if (ctx.funcalt() != null) {
@@ -95,6 +123,7 @@ public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
 
     @Override
     public Object visitOsi(LatinoParser.OsiContext ctx) {
+        System.out.println();
         System.out.print(" ".repeat(nivelIdent * 4) + "elif ");
         visitExp(ctx.exp());
         System.out.print(":");
@@ -130,7 +159,7 @@ public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
             System.out.print(")");
             for (int i = 0; i < ctx.OP().size(); i++) {
                 System.out.print(ctx.OP(i).getText());
-                visitExp(ctx.exp(i));
+                visitExp(ctx.exp(i+1));
             }
         }
         return 0;
@@ -372,7 +401,7 @@ public class TraductorPythonVisitor2 extends LatinoBaseVisitor{
                 visitArgs(ctx.args());
             }
             else{//fct leer()
-                System.out.print("leer()");
+                System.out.print("intput()");
             }
         }
         return 0;
