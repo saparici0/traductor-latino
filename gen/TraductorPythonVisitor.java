@@ -19,79 +19,70 @@ public class TraductorPythonVisitor extends LatinoBaseVisitor{
             }
         }
 
-        if (ctx.funcalt() != null && ctx.dictargs(0).getText() != "") {
-            String funcName = "fun" + cont.getAndIncrement();
-            System.out.print(" ".repeat(nivelIdent * 4) + "def " + funcName);
-            visitArgs(ctx.funcalt().args());
-            System.out.print(" :");
-            nivelIdent++;
-            visitSecnovac(ctx.funcalt().secnovac());
-            nivelIdent--;
-            System.out.println();
-            System.out.print(ctx.ID(0).getText() + ctx.dictargs(0).getText() + '=' + funcName);
-        } else if (ctx.funcalt() != null) {
-            System.out.print(" ".repeat(nivelIdent * 4) + "def " + ctx.ID(0).getText());
-            System.out.print(ctx.dictargs(0).getText());
-            visitArgs(ctx.funcalt().args());
-            System.out.print(" :");
-            nivelIdent++;
-            visitSecnovac(ctx.funcalt().secnovac());
-            nivelIdent--;
-            System.out.println();
-        } else if (k > 0) {
-
-        }
-
-
-
-        if (ctx.funcalt() != null || k != 0) {
-            if (ctx.funcalt() != null) {
-                System.out.print(" ".repeat(nivelIdent * 4) + "def " + ctx.ID(0).getText());
+        if (k == 0 && ctx.funcalt() == null){
+            System.out.print(" ".repeat(nivelIdent * 4) + ctx.ID(0).getText());
+            visitDictargs(ctx.dictargs(0));
+            int nvars = ctx.ID().size();
+            for (int i = 1; i < nvars; i++){
+                System.out.print(", " + ctx.ID(i).getText());
+                visitDictargs(ctx.dictargs(i));
+            }
+            System.out.print(" " + ctx.OP_ASIG().getText() + " ");
+            visitExp(ctx.exp());
+            for (int i = 0; i < ctx.asigadc().size(); i++){
+                System.out.print(", ");
+                visitExp(ctx.asigadc(i).exp());
+            }
+        } else {
+            if (ctx.funcalt() != null && ctx.dictargs(0).getText() != "") {
+                String funcName = "fun" + cont.getAndIncrement();
+                System.out.print(" ".repeat(nivelIdent * 4) + "def " + funcName);
                 visitArgs(ctx.funcalt().args());
                 System.out.print(" :");
                 nivelIdent++;
                 visitSecnovac(ctx.funcalt().secnovac());
                 nivelIdent--;
                 System.out.println();
-            } else {
-                System.out.print(" ".repeat(nivelIdent * 4) + ctx.ID(0).getText());
-                System.out.print(" " + ctx.OP_ASIG().getText() + " ");
-                visit(ctx.exp());
+                System.out.println(ctx.ID(0).getText() + ctx.dictargs(0).getText() + '=' + funcName);
+            } else if (ctx.funcalt() != null) {
+                System.out.print(" ".repeat(nivelIdent * 4) + "def " + ctx.ID(0).getText());
+                System.out.print(ctx.dictargs(0).getText());
+                visitArgs(ctx.funcalt().args());
+                System.out.print(" :");
+                nivelIdent++;
+                visitSecnovac(ctx.funcalt().secnovac());
+                nivelIdent--;
                 System.out.println();
             }
 
             for (int i = 0; i < ctx.asigadc().size(); i++) {
-                if (ctx.asigadc(i).funcalt() != null) {
-                    System.out.print(" ".repeat(nivelIdent * 4) + "def " + ctx.ID(i+1).getText());
+                if (ctx.asigadc(i).funcalt() != null && ctx.dictargs(i+1).getText() != "") {
+                    String funcName = "fun" + cont.getAndIncrement();
+                    System.out.print(" ".repeat(nivelIdent * 4) + "def " + funcName);
                     visitArgs(ctx.asigadc(i).funcalt().args());
                     System.out.print(" :");
                     nivelIdent++;
                     visitSecnovac(ctx.asigadc(i).funcalt().secnovac());
                     nivelIdent--;
                     System.out.println();
-                }
-                else{
-                    System.out.print(" ".repeat(nivelIdent * 4) + ctx.ID(i+1).getText());
+                    System.out.println(ctx.ID(i+1).getText() + ctx.dictargs(i+1).getText() + '=' + funcName);
+                } else if (ctx.asigadc(i).funcalt() != null) {
+                    System.out.print(" ".repeat(nivelIdent * 4) + "def " + ctx.ID(i + 1).getText());
+                    visitArgs(ctx.asigadc(i).funcalt().args());
+                    System.out.print(" :");
+                    nivelIdent++;
+                    visitSecnovac(ctx.asigadc(i).funcalt().secnovac());
+                    nivelIdent--;
+                    System.out.println();
+                } else {
+                    System.out.print(" ".repeat(nivelIdent * 4) + ctx.ID(i + 1).getText());
                     System.out.print(" " + ctx.OP_ASIG().getText() + " ");
                     visit(ctx.asigadc(i).exp());
                     System.out.println();
                 }
             }
         }
-        else {
-            System.out.print(" ".repeat(nivelIdent * 4) + ctx.ID(0).getText());
-            int nvars = ctx.ID().size();
-            if (nvars > 1) {
-                for (int i = 1; i < nvars; i++) System.out.print(", " + ctx.ID(i).getText());
-            }
-            System.out.print(" " + ctx.OP_ASIG().getText() + " ");
-            if (ctx.exp() != null) {
-                visitExp(ctx.exp());
-            }
-            for (int i = 0; i < ctx.asigadc().size(); i++){
-                visitExp(ctx.asigadc(i).exp());
-            }
-        }
+
         return 0;
     }
 
@@ -337,6 +328,85 @@ public class TraductorPythonVisitor extends LatinoBaseVisitor{
     }
 
     @Override
+    public Object visitDic(LatinoParser.DicContext ctx) {
+        System.out.print('{');
+
+        System.out.print('}');
+
+        int k = 0;
+        for(int j = 0; j < ctx.dicadc().size(); j++){
+            if(ctx.dicadc(j).funcalt() != null){
+                k += 1;
+            }
+        }
+
+        if (k == 0 && ctx.funcalt() == null){
+            visitExpllave(ctx.expllave());
+            System.out.print(":");
+            visitExp(ctx.exp());
+            System.out.println();
+            for (int i = 0; i < ctx.dicadc().size(); i++){
+                visitExpllave(ctx.dicadc(i).expllave());
+                System.out.print(" : ");
+                visitExp(ctx.dicadc(i).exp());
+                System.out.println();
+            }
+        } /*else {
+
+            if (ctx.funcalt() != null && ctx.dictargs(0).getText() != "") {
+                String funcName = "fun" + cont.getAndIncrement();
+                System.out.print(" ".repeat(nivelIdent * 4) + "def " + funcName);
+                visitArgs(ctx.funcalt().args());
+                System.out.print(" :");
+                nivelIdent++;
+                visitSecnovac(ctx.funcalt().secnovac());
+                nivelIdent--;
+                System.out.println();
+                System.out.println(ctx.ID(0).getText() + ctx.dictargs(0).getText() + '=' + funcName);
+            } else if (ctx.funcalt() != null) {
+                System.out.print(" ".repeat(nivelIdent * 4) + "def " + ctx.ID(0).getText());
+                System.out.print(ctx.dictargs(0).getText());
+                visitArgs(ctx.funcalt().args());
+                System.out.print(" :");
+                nivelIdent++;
+                visitSecnovac(ctx.funcalt().secnovac());
+                nivelIdent--;
+                System.out.println();
+            }
+
+            for (int i = 0; i < ctx.asigadc().size(); i++) {
+                if (ctx.asigadc(i).funcalt() != null && ctx.dictargs(i+1).getText() != "") {
+                    String funcName = "fun" + cont.getAndIncrement();
+                    System.out.print(" ".repeat(nivelIdent * 4) + "def " + funcName);
+                    visitArgs(ctx.asigadc(i).funcalt().args());
+                    System.out.print(" :");
+                    nivelIdent++;
+                    visitSecnovac(ctx.asigadc(i).funcalt().secnovac());
+                    nivelIdent--;
+                    System.out.println();
+                    System.out.println(ctx.ID(i+1).getText() + ctx.dictargs(i+1).getText() + '=' + funcName);
+                } else if (ctx.asigadc(i).funcalt() != null) {
+                    System.out.print(" ".repeat(nivelIdent * 4) + "def " + ctx.ID(i + 1).getText());
+                    visitArgs(ctx.asigadc(i).funcalt().args());
+                    System.out.print(" :");
+                    nivelIdent++;
+                    visitSecnovac(ctx.asigadc(i).funcalt().secnovac());
+                    nivelIdent--;
+                    System.out.println();
+                } else {
+                    System.out.print(" ".repeat(nivelIdent * 4) + ctx.ID(i + 1).getText());
+                    System.out.print(" " + ctx.OP_ASIG().getText() + " ");
+                    visit(ctx.asigadc(i).exp());
+                    System.out.println();
+                }
+            }
+        }*/
+
+
+        return 0;
+    }
+
+    @Override
     public Object visitFuncalt(LatinoParser.FuncaltContext ctx) {
         return super.visitFuncalt(ctx);
     }
@@ -401,7 +471,7 @@ public class TraductorPythonVisitor extends LatinoBaseVisitor{
                 visitArgs(ctx.args());
             }
             else{//fct leer()
-                System.out.print("leer()");
+                System.out.print("intput()");
             }
         }
         return 0;

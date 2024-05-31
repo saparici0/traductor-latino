@@ -98,7 +98,11 @@ list
 
 dic // DICCIONARIOS
     : '{' '}'
-    | '{' expllave ':' ( exp | funcalt )  (',' expllave ':' ( exp | funcalt ) )* '}'
+    | '{' expllave ':' ( exp | funcalt )  ( dicadc )* '}'
+    ;
+
+dicadc
+    : ',' expllave ':' ( exp | funcalt )
     ;
 
 si // CONDICIONAL SI
